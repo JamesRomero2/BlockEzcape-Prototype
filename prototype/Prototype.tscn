@@ -1,0 +1,236 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://prototype/PlayerMovement.gd" type="Script" id=2]
+[ext_resource path="res://prototype/Collectables.gd" type="Script" id=3]
+[ext_resource path="res://prototype/LevelScript.gd" type="Script" id=4]
+[ext_resource path="res://prototype/DoorScript.gd" type="Script" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 8, 8 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 8, 8 )
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 7.0
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 8, 8 )
+
+[node name="Prototype" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+current = true
+
+[node name="Player" type="KinematicBody2D" parent="."]
+position = Vector2( 288, 16 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Player"]
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2( 8, 8 )
+shape = SubResource( 1 )
+
+[node name="RayCast2D" type="RayCast2D" parent="Player"]
+position = Vector2( 8, 8 )
+cast_to = Vector2( 8, 0 )
+
+[node name="Wall" type="StaticBody2D" parent="."]
+position = Vector2( 16, 128 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Wall"]
+modulate = Color( 0, 0, 0, 1 )
+self_modulate = Color( 0, 0, 0, 1 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
+position = Vector2( 8, 8 )
+shape = SubResource( 2 )
+
+[node name="Wall5" type="StaticBody2D" parent="."]
+position = Vector2( 0, 16 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Wall5"]
+modulate = Color( 0, 0, 0, 1 )
+self_modulate = Color( 0, 0, 0, 1 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall5"]
+position = Vector2( 8, 8 )
+shape = SubResource( 2 )
+
+[node name="Wall7" type="StaticBody2D" parent="."]
+position = Vector2( 16, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Wall7"]
+modulate = Color( 0, 0, 0, 1 )
+self_modulate = Color( 0, 0, 0, 1 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall7"]
+position = Vector2( 8, 8 )
+shape = SubResource( 2 )
+
+[node name="Wall4" type="StaticBody2D" parent="."]
+position = Vector2( 304, 112 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Wall4"]
+modulate = Color( 0, 0, 0, 1 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall4"]
+position = Vector2( 8, 8 )
+shape = SubResource( 2 )
+
+[node name="Wall2" type="StaticBody2D" parent="."]
+position = Vector2( 304, 16 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Wall2"]
+modulate = Color( 0, 0, 0, 1 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2"]
+position = Vector2( 8, 8 )
+shape = SubResource( 2 )
+
+[node name="Wall6" type="StaticBody2D" parent="."]
+position = Vector2( 288, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Wall6"]
+modulate = Color( 0, 0, 0, 1 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall6"]
+position = Vector2( 8, 8 )
+shape = SubResource( 2 )
+
+[node name="Wall3" type="StaticBody2D" parent="."]
+position = Vector2( 288, 208 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Wall3"]
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall3"]
+position = Vector2( 8, 8 )
+shape = SubResource( 2 )
+
+[node name="Collectibles" type="Area2D" parent="."]
+position = Vector2( 16, 16 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Collectibles"]
+modulate = Color( 1, 0.870588, 0.290196, 1 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collectibles"]
+position = Vector2( 8, 8 )
+shape = SubResource( 3 )
+
+[node name="Collectibles2" type="Area2D" parent="."]
+position = Vector2( 16, 112 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Collectibles2"]
+modulate = Color( 1, 0.870588, 0.290196, 1 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collectibles2"]
+position = Vector2( 8, 8 )
+shape = SubResource( 3 )
+
+[node name="Collectibles3" type="Area2D" parent="."]
+position = Vector2( 288, 112 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Collectibles3"]
+modulate = Color( 1, 0.870588, 0.290196, 1 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collectibles3"]
+position = Vector2( 8, 8 )
+shape = SubResource( 3 )
+
+[node name="Door" type="Area2D" parent="."]
+position = Vector2( 288, 192 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Door"]
+modulate = Color( 0.0666667, 0, 0.643137, 1 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door"]
+position = Vector2( 8, 8 )
+shape = SubResource( 4 )
+
+[connection signal="body_entered" from="Collectibles" to="Collectibles" method="_on_Collectibles_body_entered"]
+[connection signal="keyCollected" from="Collectibles" to="Door" method="_on_Collectibles_keyCollected"]
+[connection signal="body_entered" from="Collectibles2" to="Collectibles2" method="_on_Collectibles_body_entered"]
+[connection signal="keyCollected" from="Collectibles2" to="Door" method="_on_Collectibles_keyCollected"]
+[connection signal="body_entered" from="Collectibles3" to="Collectibles3" method="_on_Collectibles_body_entered"]
+[connection signal="keyCollected" from="Collectibles3" to="Door" method="_on_Collectibles_keyCollected"]
+[connection signal="body_entered" from="Door" to="Door" method="_on_Door_body_entered"]
