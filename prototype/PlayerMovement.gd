@@ -1,13 +1,7 @@
 extends KinematicBody2D
 
 onready var ray = $RayCast2D
-var gridSize := 16
-var inputs = {
-	"ui_up": Vector2.UP,
-	"ui_down": Vector2.DOWN,
-	"ui_left": Vector2.LEFT,
-	"ui_right": Vector2.RIGHT,
-}
+var gridSize := 16.00
 var canMove = true
 var inputDirection = Vector2.ZERO
 
@@ -30,12 +24,11 @@ func _physics_process(_delta):
 
 func move(direction):
 	var vectorPosition = direction * gridSize
-	ray.cast_to = direction * 8
+	ray.cast_to = direction * (gridSize / 2)
 	ray.force_raycast_update()
 	var rayColliding = ray.is_colliding()
 
 	if rayColliding:
 		canMove = true
-		# inputDirection = Vector2.ZERO
 		return
 	position += vectorPosition

@@ -1,10 +1,14 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
-[ext_resource path="res://prototype/PlayerMovement.gd" type="Script" id=2]
+[ext_resource path="res://prototype/PlayerScript.gd" type="Script" id=2]
 [ext_resource path="res://prototype/Collectables.gd" type="Script" id=3]
 [ext_resource path="res://prototype/LevelScript.gd" type="Script" id=4]
 [ext_resource path="res://prototype/DoorScript.gd" type="Script" id=5]
+[ext_resource path="res://assets/images/png/Bag_Prototype.png" type="Texture" id=6]
+[ext_resource path="res://assets/images/png/BagSlot_Prototype.png" type="Texture" id=7]
+[ext_resource path="res://prototype/Slot.gd" type="Script" id=8]
+[ext_resource path="res://prototype/Inventory.gd" type="Script" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
@@ -18,6 +22,10 @@ radius = 7.0
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 8, 8 )
 
+[sub_resource type="StyleBoxTexture" id=5]
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 32, 32 )
+
 [node name="Prototype" type="Node2D"]
 script = ExtResource( 4 )
 
@@ -25,212 +33,338 @@ script = ExtResource( 4 )
 anchor_mode = 0
 current = true
 
-[node name="Player" type="KinematicBody2D" parent="."]
+[node name="GameArea" type="Node2D" parent="."]
+position = Vector2( 304, 16 )
+
+[node name="Player" type="KinematicBody2D" parent="GameArea"]
 position = Vector2( 288, 16 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Player"]
+[node name="Sprite" type="Sprite" parent="GameArea/Player"]
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Player"]
 position = Vector2( 8, 8 )
 shape = SubResource( 1 )
 
-[node name="RayCast2D" type="RayCast2D" parent="Player"]
+[node name="RayCast2D" type="RayCast2D" parent="GameArea/Player"]
 position = Vector2( 8, 8 )
 cast_to = Vector2( 8, 0 )
 
-[node name="Wall" type="StaticBody2D" parent="."]
+[node name="Wall" type="StaticBody2D" parent="GameArea"]
 position = Vector2( 16, 128 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Wall"]
+[node name="Sprite" type="Sprite" parent="GameArea/Wall"]
 modulate = Color( 0, 0, 0, 1 )
 self_modulate = Color( 0, 0, 0, 1 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Wall"]
 position = Vector2( 8, 8 )
 shape = SubResource( 2 )
 
-[node name="Wall5" type="StaticBody2D" parent="."]
+[node name="Wall8" type="StaticBody2D" parent="GameArea"]
+position = Vector2( 0, 112 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="GameArea/Wall8"]
+modulate = Color( 0, 0, 0, 1 )
+self_modulate = Color( 0, 0, 0, 1 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Wall8"]
+position = Vector2( 8, 8 )
+shape = SubResource( 2 )
+
+[node name="Wall5" type="StaticBody2D" parent="GameArea"]
 position = Vector2( 0, 16 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Wall5"]
+[node name="Sprite" type="Sprite" parent="GameArea/Wall5"]
 modulate = Color( 0, 0, 0, 1 )
 self_modulate = Color( 0, 0, 0, 1 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall5"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Wall5"]
 position = Vector2( 8, 8 )
 shape = SubResource( 2 )
 
-[node name="Wall7" type="StaticBody2D" parent="."]
+[node name="Wall7" type="StaticBody2D" parent="GameArea"]
 position = Vector2( 16, 0 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Wall7"]
+[node name="Sprite" type="Sprite" parent="GameArea/Wall7"]
 modulate = Color( 0, 0, 0, 1 )
 self_modulate = Color( 0, 0, 0, 1 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall7"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Wall7"]
 position = Vector2( 8, 8 )
 shape = SubResource( 2 )
 
-[node name="Wall4" type="StaticBody2D" parent="."]
+[node name="Wall4" type="StaticBody2D" parent="GameArea"]
 position = Vector2( 304, 112 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Wall4"]
+[node name="Sprite" type="Sprite" parent="GameArea/Wall4"]
 modulate = Color( 0, 0, 0, 1 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall4"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Wall4"]
 position = Vector2( 8, 8 )
 shape = SubResource( 2 )
 
-[node name="Wall2" type="StaticBody2D" parent="."]
+[node name="Wall2" type="StaticBody2D" parent="GameArea"]
 position = Vector2( 304, 16 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Wall2"]
+[node name="Sprite" type="Sprite" parent="GameArea/Wall2"]
 modulate = Color( 0, 0, 0, 1 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Wall2"]
 position = Vector2( 8, 8 )
 shape = SubResource( 2 )
 
-[node name="Wall6" type="StaticBody2D" parent="."]
+[node name="Wall6" type="StaticBody2D" parent="GameArea"]
 position = Vector2( 288, 0 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Wall6"]
+[node name="Sprite" type="Sprite" parent="GameArea/Wall6"]
 modulate = Color( 0, 0, 0, 1 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall6"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Wall6"]
 position = Vector2( 8, 8 )
 shape = SubResource( 2 )
 
-[node name="Wall3" type="StaticBody2D" parent="."]
+[node name="Wall3" type="StaticBody2D" parent="GameArea"]
 position = Vector2( 288, 208 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Wall3"]
+[node name="Sprite" type="Sprite" parent="GameArea/Wall3"]
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall3"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Wall3"]
 position = Vector2( 8, 8 )
 shape = SubResource( 2 )
 
-[node name="Collectibles" type="Area2D" parent="."]
+[node name="Collectibles" type="Area2D" parent="GameArea"]
 position = Vector2( 16, 16 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
 }
+itemName = "item_1"
+itemQuantity = 1
 
-[node name="Sprite" type="Sprite" parent="Collectibles"]
+[node name="Sprite" type="Sprite" parent="GameArea/Collectibles"]
 modulate = Color( 1, 0.870588, 0.290196, 1 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Collectibles"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Collectibles"]
 position = Vector2( 8, 8 )
 shape = SubResource( 3 )
 
-[node name="Collectibles2" type="Area2D" parent="."]
+[node name="Collectibles2" type="Area2D" parent="GameArea"]
 position = Vector2( 16, 112 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
 }
+itemName = "item_2"
+itemQuantity = 1
 
-[node name="Sprite" type="Sprite" parent="Collectibles2"]
+[node name="Sprite" type="Sprite" parent="GameArea/Collectibles2"]
 modulate = Color( 1, 0.870588, 0.290196, 1 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Collectibles2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Collectibles2"]
 position = Vector2( 8, 8 )
 shape = SubResource( 3 )
 
-[node name="Collectibles3" type="Area2D" parent="."]
+[node name="Collectibles3" type="Area2D" parent="GameArea"]
 position = Vector2( 288, 112 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
 }
+itemName = "item_3"
+itemQuantity = 1
 
-[node name="Sprite" type="Sprite" parent="Collectibles3"]
+[node name="Sprite" type="Sprite" parent="GameArea/Collectibles3"]
 modulate = Color( 1, 0.870588, 0.290196, 1 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Collectibles3"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Collectibles3"]
 position = Vector2( 8, 8 )
 shape = SubResource( 3 )
 
-[node name="Door" type="Area2D" parent="."]
+[node name="Door" type="Area2D" parent="GameArea"]
 position = Vector2( 288, 192 )
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Door"]
+[node name="Sprite" type="Sprite" parent="GameArea/Door"]
 modulate = Color( 0.0666667, 0, 0.643137, 1 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Door"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Door"]
 position = Vector2( 8, 8 )
 shape = SubResource( 4 )
 
-[connection signal="body_entered" from="Collectibles" to="Collectibles" method="_on_Collectibles_body_entered"]
-[connection signal="keyCollected" from="Collectibles" to="Door" method="_on_Collectibles_keyCollected"]
-[connection signal="body_entered" from="Collectibles2" to="Collectibles2" method="_on_Collectibles_body_entered"]
-[connection signal="keyCollected" from="Collectibles2" to="Door" method="_on_Collectibles_keyCollected"]
-[connection signal="body_entered" from="Collectibles3" to="Collectibles3" method="_on_Collectibles_body_entered"]
-[connection signal="keyCollected" from="Collectibles3" to="Door" method="_on_Collectibles_keyCollected"]
-[connection signal="body_entered" from="Door" to="Door" method="_on_Door_body_entered"]
+[node name="Inventory" type="Node2D" parent="."]
+script = ExtResource( 9 )
+
+[node name="TextureRect" type="TextureRect" parent="Inventory"]
+anchor_bottom = 1.0
+texture = ExtResource( 6 )
+
+[node name="GridContainer" type="GridContainer" parent="Inventory"]
+anchor_bottom = 1.0
+margin_top = 32.0
+margin_right = 32.0
+margin_bottom = 64.0
+custom_constants/vseparation = 0
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Panel" type="Panel" parent="Inventory/GridContainer"]
+margin_right = 32.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+custom_styles/panel = SubResource( 5 )
+script = ExtResource( 8 )
+
+[node name="Panel2" type="Panel" parent="Inventory/GridContainer"]
+margin_top = 32.0
+margin_right = 32.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 32, 32 )
+custom_styles/panel = SubResource( 5 )
+script = ExtResource( 8 )
+
+[node name="Panel3" type="Panel" parent="Inventory/GridContainer"]
+margin_top = 64.0
+margin_right = 32.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 32, 32 )
+custom_styles/panel = SubResource( 5 )
+script = ExtResource( 8 )
+
+[node name="Panel4" type="Panel" parent="Inventory/GridContainer"]
+margin_top = 96.0
+margin_right = 32.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 32, 32 )
+custom_styles/panel = SubResource( 5 )
+script = ExtResource( 8 )
+
+[node name="Panel5" type="Panel" parent="Inventory/GridContainer"]
+margin_top = 128.0
+margin_right = 32.0
+margin_bottom = 160.0
+rect_min_size = Vector2( 32, 32 )
+custom_styles/panel = SubResource( 5 )
+script = ExtResource( 8 )
+
+[node name="Panel6" type="Panel" parent="Inventory/GridContainer"]
+margin_top = 160.0
+margin_right = 32.0
+margin_bottom = 192.0
+rect_min_size = Vector2( 32, 32 )
+custom_styles/panel = SubResource( 5 )
+script = ExtResource( 8 )
+
+[node name="Panel7" type="Panel" parent="Inventory/GridContainer"]
+margin_top = 192.0
+margin_right = 32.0
+margin_bottom = 224.0
+rect_min_size = Vector2( 32, 32 )
+custom_styles/panel = SubResource( 5 )
+script = ExtResource( 8 )
+
+[node name="Panel8" type="Panel" parent="Inventory/GridContainer"]
+margin_top = 224.0
+margin_right = 32.0
+margin_bottom = 256.0
+rect_min_size = Vector2( 32, 32 )
+custom_styles/panel = SubResource( 5 )
+script = ExtResource( 8 )
+
+[node name="Panel9" type="Panel" parent="Inventory/GridContainer"]
+margin_top = 256.0
+margin_right = 32.0
+margin_bottom = 288.0
+rect_min_size = Vector2( 32, 32 )
+custom_styles/panel = SubResource( 5 )
+script = ExtResource( 8 )
+
+[node name="Panel10" type="Panel" parent="Inventory/GridContainer"]
+margin_top = 288.0
+margin_right = 32.0
+margin_bottom = 320.0
+rect_min_size = Vector2( 32, 32 )
+custom_styles/panel = SubResource( 5 )
+script = ExtResource( 8 )
+
+[connection signal="inventorySignal" from="." to="Inventory" method="_on_Prototype_inventorySignal"]
+[connection signal="body_entered" from="GameArea/Collectibles" to="GameArea/Collectibles" method="_on_Collectibles_body_entered"]
+[connection signal="keyCollected" from="GameArea/Collectibles" to="." method="_on_Collectibles_keyCollected"]
+[connection signal="keyCollected" from="GameArea/Collectibles" to="GameArea/Door" method="_on_Collectibles_keyCollected"]
+[connection signal="body_entered" from="GameArea/Collectibles2" to="GameArea/Collectibles2" method="_on_Collectibles_body_entered"]
+[connection signal="keyCollected" from="GameArea/Collectibles2" to="." method="_on_Collectibles_keyCollected"]
+[connection signal="keyCollected" from="GameArea/Collectibles2" to="GameArea/Door" method="_on_Collectibles_keyCollected"]
+[connection signal="body_entered" from="GameArea/Collectibles3" to="GameArea/Collectibles3" method="_on_Collectibles_body_entered"]
+[connection signal="keyCollected" from="GameArea/Collectibles3" to="." method="_on_Collectibles_keyCollected"]
+[connection signal="keyCollected" from="GameArea/Collectibles3" to="GameArea/Door" method="_on_Collectibles_keyCollected"]
+[connection signal="body_entered" from="GameArea/Door" to="GameArea/Door" method="_on_Door_body_entered"]
