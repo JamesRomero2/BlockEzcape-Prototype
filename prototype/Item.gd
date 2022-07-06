@@ -8,4 +8,4 @@ func set_item(name, quantity):
 	item_quantity = quantity
 	$TextureRect.texture = load("res://icon.png")
 
-
+ 

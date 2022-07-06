@@ -1,6 +1,8 @@
 extends Node2D
 
 const NUMBERINVENTORYSLOT = 9
+const SLOTCLASS := preload("res://prototype/Slot.gd")
+const ITEMCLASS := preload("res://prototype/Item.gd")
 
 signal inventorySignal
 
@@ -26,3 +28,11 @@ func _on_Collectibles_keyCollected(itemName, itemQuantity):
 	print(itemName, itemQuantity)
 	print(inventory)
 	emit_signal("inventorySignal")
+
+
+func _on_Inventory_addItemToSlot(item: ITEMCLASS, slot: SLOTCLASS):
+	inventory[slot.slotIndex] = [item.item_name, item.item_quantity]
+
+
+func _on_Inventory_removeItem(slot: SLOTCLASS):
+	inventory.erase(slot.slotIndex)

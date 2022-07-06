@@ -2,6 +2,7 @@ extends Panel
 
 var itemClass = preload("res://prototype/Item.tscn")
 var item = null
+var slotIndex
 
 func pickFromSlot():
 	remove_child(item)
