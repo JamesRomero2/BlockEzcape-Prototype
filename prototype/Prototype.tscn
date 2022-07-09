@@ -1,7 +1,7 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
-[ext_resource path="res://prototype/PlayerScript.gd" type="Script" id=2]
+[ext_resource path="res://gameObjects/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://prototype/Collectables.gd" type="Script" id=3]
 [ext_resource path="res://prototype/LevelScript.gd" type="Script" id=4]
 [ext_resource path="res://prototype/DoorScript.gd" type="Script" id=5]
@@ -9,9 +9,10 @@
 [ext_resource path="res://assets/images/png/BagSlot_Prototype.png" type="Texture" id=7]
 [ext_resource path="res://prototype/Slot.gd" type="Script" id=8]
 [ext_resource path="res://prototype/Inventory.gd" type="Script" id=9]
+[ext_resource path="res://prototype/GameArea.gd" type="Script" id=10]
+[ext_resource path="res://assets/images/png/Level_1_BG.png" type="Texture" id=11]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 8, 8 )
+[sub_resource type="TileSet" id=6]
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 8, 8 )
@@ -21,8 +22,6 @@ radius = 7.0
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 8, 8 )
-
-[sub_resource type="TileSet" id=6]
 
 [sub_resource type="StyleBoxTexture" id=5]
 texture = ExtResource( 7 )
@@ -35,162 +34,163 @@ script = ExtResource( 4 )
 anchor_mode = 0
 current = true
 
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = -768.0
+margin_top = -384.0
+margin_right = 1408.0
+margin_bottom = 768.0
+texture = ExtResource( 11 )
+stretch_mode = 2
+
 [node name="GameArea" type="Node2D" parent="."]
-position = Vector2( 480, 16 )
+position = Vector2( 128, 32 )
+script = ExtResource( 10 )
 
-[node name="Player" type="KinematicBody2D" parent="GameArea"]
-position = Vector2( 96, 16 )
-script = ExtResource( 2 )
+[node name="PuzzlePhase" type="Node2D" parent="GameArea"]
+
+[node name="TileMap" type="TileMap" parent="GameArea/PuzzlePhase"]
+position = Vector2( -128, -32 )
+tile_set = SubResource( 6 )
+cell_size = Vector2( 16, 16 )
+cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )
+cell_y_sort = true
+format = 1
+
+[node name="Player" parent="GameArea/PuzzlePhase/TileMap" instance=ExtResource( 2 )]
+
+[node name="Wall" type="StaticBody2D" parent="GameArea/PuzzlePhase/TileMap"]
+position = Vector2( 144, 96 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="GameArea/Player"]
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 1 )
-centered = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Player"]
-position = Vector2( 8, 8 )
-shape = SubResource( 1 )
-
-[node name="RayCast2D" type="RayCast2D" parent="GameArea/Player"]
-position = Vector2( 8, 8 )
-cast_to = Vector2( 8, 0 )
-
-[node name="Wall" type="StaticBody2D" parent="GameArea"]
-position = Vector2( 16, 64 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Sprite" type="Sprite" parent="GameArea/Wall"]
+[node name="Sprite" type="Sprite" parent="GameArea/PuzzlePhase/TileMap/Wall"]
 modulate = Color( 0, 0, 0, 1 )
 self_modulate = Color( 0, 0, 0, 1 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Wall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/PuzzlePhase/TileMap/Wall"]
 position = Vector2( 8, 8 )
 shape = SubResource( 2 )
 
-[node name="Wall8" type="StaticBody2D" parent="GameArea"]
-position = Vector2( 0, 48 )
+[node name="Wall8" type="StaticBody2D" parent="GameArea/PuzzlePhase/TileMap"]
+position = Vector2( 128, 80 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="GameArea/Wall8"]
+[node name="Sprite" type="Sprite" parent="GameArea/PuzzlePhase/TileMap/Wall8"]
 modulate = Color( 0, 0, 0, 1 )
 self_modulate = Color( 0, 0, 0, 1 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Wall8"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/PuzzlePhase/TileMap/Wall8"]
 position = Vector2( 8, 8 )
 shape = SubResource( 2 )
 
-[node name="Wall5" type="StaticBody2D" parent="GameArea"]
-position = Vector2( 0, 16 )
+[node name="Wall5" type="StaticBody2D" parent="GameArea/PuzzlePhase/TileMap"]
+position = Vector2( 128, 48 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="GameArea/Wall5"]
+[node name="Sprite" type="Sprite" parent="GameArea/PuzzlePhase/TileMap/Wall5"]
 modulate = Color( 0, 0, 0, 1 )
 self_modulate = Color( 0, 0, 0, 1 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Wall5"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/PuzzlePhase/TileMap/Wall5"]
 position = Vector2( 8, 8 )
 shape = SubResource( 2 )
 
-[node name="Wall7" type="StaticBody2D" parent="GameArea"]
-position = Vector2( 16, 0 )
+[node name="Wall7" type="StaticBody2D" parent="GameArea/PuzzlePhase/TileMap"]
+position = Vector2( 144, 32 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="GameArea/Wall7"]
+[node name="Sprite" type="Sprite" parent="GameArea/PuzzlePhase/TileMap/Wall7"]
 modulate = Color( 0, 0, 0, 1 )
 self_modulate = Color( 0, 0, 0, 1 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Wall7"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/PuzzlePhase/TileMap/Wall7"]
 position = Vector2( 8, 8 )
 shape = SubResource( 2 )
 
-[node name="Wall4" type="StaticBody2D" parent="GameArea"]
-position = Vector2( 112, 48 )
+[node name="Wall4" type="StaticBody2D" parent="GameArea/PuzzlePhase/TileMap"]
+position = Vector2( 240, 80 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="GameArea/Wall4"]
+[node name="Sprite" type="Sprite" parent="GameArea/PuzzlePhase/TileMap/Wall4"]
 modulate = Color( 0, 0, 0, 1 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Wall4"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/PuzzlePhase/TileMap/Wall4"]
 position = Vector2( 8, 8 )
 shape = SubResource( 2 )
 
-[node name="Wall2" type="StaticBody2D" parent="GameArea"]
-position = Vector2( 112, 16 )
+[node name="Wall2" type="StaticBody2D" parent="GameArea/PuzzlePhase/TileMap"]
+position = Vector2( 240, 48 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="GameArea/Wall2"]
+[node name="Sprite" type="Sprite" parent="GameArea/PuzzlePhase/TileMap/Wall2"]
 modulate = Color( 0, 0, 0, 1 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Wall2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/PuzzlePhase/TileMap/Wall2"]
 position = Vector2( 8, 8 )
 shape = SubResource( 2 )
 
-[node name="Wall6" type="StaticBody2D" parent="GameArea"]
-position = Vector2( 96, 0 )
+[node name="Wall6" type="StaticBody2D" parent="GameArea/PuzzlePhase/TileMap"]
+position = Vector2( 224, 32 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="GameArea/Wall6"]
+[node name="Sprite" type="Sprite" parent="GameArea/PuzzlePhase/TileMap/Wall6"]
 modulate = Color( 0, 0, 0, 1 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Wall6"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/PuzzlePhase/TileMap/Wall6"]
 position = Vector2( 8, 8 )
 shape = SubResource( 2 )
 
-[node name="Wall3" type="StaticBody2D" parent="GameArea"]
-position = Vector2( 96, 144 )
+[node name="Wall3" type="StaticBody2D" parent="GameArea/PuzzlePhase/TileMap"]
+position = Vector2( 224, 176 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="GameArea/Wall3"]
+[node name="Sprite" type="Sprite" parent="GameArea/PuzzlePhase/TileMap/Wall3"]
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Wall3"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/PuzzlePhase/TileMap/Wall3"]
 position = Vector2( 8, 8 )
 shape = SubResource( 2 )
 
-[node name="Collectibles" type="Area2D" parent="GameArea"]
-position = Vector2( 16, 16 )
+[node name="Collectibles" type="Area2D" parent="GameArea/PuzzlePhase/TileMap"]
+position = Vector2( 144, 48 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
@@ -198,18 +198,18 @@ __meta__ = {
 itemName = "item_1"
 itemQuantity = 1
 
-[node name="Sprite" type="Sprite" parent="GameArea/Collectibles"]
+[node name="Sprite" type="Sprite" parent="GameArea/PuzzlePhase/TileMap/Collectibles"]
 modulate = Color( 1, 0.870588, 0.290196, 1 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Collectibles"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/PuzzlePhase/TileMap/Collectibles"]
 position = Vector2( 8, 8 )
 shape = SubResource( 3 )
 
-[node name="Collectibles2" type="Area2D" parent="GameArea"]
-position = Vector2( 16, 48 )
+[node name="Collectibles2" type="Area2D" parent="GameArea/PuzzlePhase/TileMap"]
+position = Vector2( 144, 80 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
@@ -217,18 +217,18 @@ __meta__ = {
 itemName = "item_2"
 itemQuantity = 1
 
-[node name="Sprite" type="Sprite" parent="GameArea/Collectibles2"]
+[node name="Sprite" type="Sprite" parent="GameArea/PuzzlePhase/TileMap/Collectibles2"]
 modulate = Color( 1, 0.870588, 0.290196, 1 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Collectibles2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/PuzzlePhase/TileMap/Collectibles2"]
 position = Vector2( 8, 8 )
 shape = SubResource( 3 )
 
-[node name="Collectibles3" type="Area2D" parent="GameArea"]
-position = Vector2( 96, 48 )
+[node name="Collectibles3" type="Area2D" parent="GameArea/PuzzlePhase/TileMap"]
+position = Vector2( 224, 80 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
@@ -236,42 +236,48 @@ __meta__ = {
 itemName = "item_3"
 itemQuantity = 1
 
-[node name="Sprite" type="Sprite" parent="GameArea/Collectibles3"]
+[node name="Sprite" type="Sprite" parent="GameArea/PuzzlePhase/TileMap/Collectibles3"]
 modulate = Color( 1, 0.870588, 0.290196, 1 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Collectibles3"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/PuzzlePhase/TileMap/Collectibles3"]
 position = Vector2( 8, 8 )
 shape = SubResource( 3 )
 
-[node name="Door" type="Area2D" parent="GameArea"]
-position = Vector2( 96, 128 )
+[node name="Door" type="Area2D" parent="GameArea/PuzzlePhase/TileMap"]
+position = Vector2( 224, 160 )
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="GameArea/Door"]
+[node name="Sprite" type="Sprite" parent="GameArea/PuzzlePhase/TileMap/Door"]
 modulate = Color( 0.0666667, 0, 0.643137, 1 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/Door"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea/PuzzlePhase/TileMap/Door"]
 position = Vector2( 8, 8 )
 shape = SubResource( 4 )
 
-[node name="TileMap" type="TileMap" parent="GameArea"]
-position = Vector2( -480, -16 )
-tile_set = SubResource( 6 )
-cell_size = Vector2( 16, 16 )
-cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )
-cell_y_sort = true
-format = 1
+[node name="ScrollPhase" type="Node2D" parent="GameArea"]
+visible = false
+
+[node name="Control" type="Control" parent="GameArea/ScrollPhase"]
+margin_left = -80.0
+margin_top = -16.0
+margin_right = 496.0
+margin_bottom = 320.0
+
+[node name="Panel" type="Panel" parent="GameArea/ScrollPhase/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 
 [node name="Inventory" type="Node2D" parent="."]
+position = Vector2( 16, 16 )
 script = ExtResource( 9 )
 
 [node name="TextureRect" type="TextureRect" parent="Inventory"]
@@ -368,15 +374,16 @@ custom_styles/panel = SubResource( 5 )
 script = ExtResource( 8 )
 
 [connection signal="inventorySignal" from="." to="Inventory" method="_on_Prototype_inventorySignal"]
-[connection signal="body_entered" from="GameArea/Collectibles" to="GameArea/Collectibles" method="_on_Collectibles_body_entered"]
-[connection signal="keyCollected" from="GameArea/Collectibles" to="." method="_on_Collectibles_keyCollected"]
-[connection signal="keyCollected" from="GameArea/Collectibles" to="GameArea/Door" method="_on_Collectibles_keyCollected"]
-[connection signal="body_entered" from="GameArea/Collectibles2" to="GameArea/Collectibles2" method="_on_Collectibles_body_entered"]
-[connection signal="keyCollected" from="GameArea/Collectibles2" to="." method="_on_Collectibles_keyCollected"]
-[connection signal="keyCollected" from="GameArea/Collectibles2" to="GameArea/Door" method="_on_Collectibles_keyCollected"]
-[connection signal="body_entered" from="GameArea/Collectibles3" to="GameArea/Collectibles3" method="_on_Collectibles_body_entered"]
-[connection signal="keyCollected" from="GameArea/Collectibles3" to="." method="_on_Collectibles_keyCollected"]
-[connection signal="keyCollected" from="GameArea/Collectibles3" to="GameArea/Door" method="_on_Collectibles_keyCollected"]
-[connection signal="body_entered" from="GameArea/Door" to="GameArea/Door" method="_on_Door_body_entered"]
+[connection signal="body_entered" from="GameArea/PuzzlePhase/TileMap/Collectibles" to="GameArea/PuzzlePhase/TileMap/Collectibles" method="_on_Collectibles_body_entered"]
+[connection signal="keyCollected" from="GameArea/PuzzlePhase/TileMap/Collectibles" to="." method="_on_Collectibles_keyCollected"]
+[connection signal="keyCollected" from="GameArea/PuzzlePhase/TileMap/Collectibles" to="GameArea/PuzzlePhase/TileMap/Door" method="_on_Collectibles_keyCollected"]
+[connection signal="body_entered" from="GameArea/PuzzlePhase/TileMap/Collectibles2" to="GameArea/PuzzlePhase/TileMap/Collectibles2" method="_on_Collectibles_body_entered"]
+[connection signal="keyCollected" from="GameArea/PuzzlePhase/TileMap/Collectibles2" to="." method="_on_Collectibles_keyCollected"]
+[connection signal="keyCollected" from="GameArea/PuzzlePhase/TileMap/Collectibles2" to="GameArea/PuzzlePhase/TileMap/Door" method="_on_Collectibles_keyCollected"]
+[connection signal="body_entered" from="GameArea/PuzzlePhase/TileMap/Collectibles3" to="GameArea/PuzzlePhase/TileMap/Collectibles3" method="_on_Collectibles_body_entered"]
+[connection signal="keyCollected" from="GameArea/PuzzlePhase/TileMap/Collectibles3" to="." method="_on_Collectibles_keyCollected"]
+[connection signal="keyCollected" from="GameArea/PuzzlePhase/TileMap/Collectibles3" to="GameArea/PuzzlePhase/TileMap/Door" method="_on_Collectibles_keyCollected"]
+[connection signal="PuzzlePhaseComplete" from="GameArea/PuzzlePhase/TileMap/Door" to="GameArea" method="_on_Door_PuzzlePhaseComplete"]
+[connection signal="body_entered" from="GameArea/PuzzlePhase/TileMap/Door" to="GameArea/PuzzlePhase/TileMap/Door" method="_on_Door_body_entered"]
 [connection signal="addItemToSlot" from="Inventory" to="." method="_on_Inventory_addItemToSlot"]
 [connection signal="removeItem" from="Inventory" to="." method="_on_Inventory_removeItem"]

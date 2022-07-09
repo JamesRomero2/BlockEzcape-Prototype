@@ -8,10 +8,30 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Resource",
+"class": "Inventory",
+"language": "GDScript",
+"path": "res://scripts/Inventory.gd"
+}, {
+"base": "Resource",
+"class": "ItemResource",
+"language": "GDScript",
+"path": "res://scripts/Item.gd"
+} ]
+_global_script_class_icons={
+"Inventory": "",
+"ItemResource": ""
+}
+
 [application]
 
 config/name="Block Ezcape"
 config/icon="res://icon.png"
+
+[autoload]
+
+ItemDatabase="*res://scripts/ItemDatabase.gd"
 
 [display]
 

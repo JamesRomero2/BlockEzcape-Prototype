@@ -4,7 +4,7 @@ signal addItemToSlot(holdingItem, slot)
 signal removeItem(slot)
 
 onready var inventorySlots := $GridContainer
-onready var tileMap = get_node("/root/Prototype/GameArea/TileMap")
+onready var tileMap = get_node("/root/Prototype/GameArea/PuzzlePhase/TileMap")
 
 const SLOTCLASS := preload("res://prototype/Slot.gd")
 
@@ -52,12 +52,13 @@ func slotGuiInput(event: InputEvent, slot: SLOTCLASS):
 
 func _input(_event):
 	if holdingItem:
-		# holdingItem.global_position = get_global_mouse_position()
+		holdingItem.global_position = get_global_mouse_position()
 		var mouseTile = tileMap.world_to_map(get_global_mouse_position())
 		var localPos = tileMap.map_to_world(mouseTile)
 		var worldPos = tileMap.to_global(localPos)
-
+		
 		holdingItem.global_position = worldPos
+		# holdingItem.global_position = Vector2(round(get_global_mouse_position().x / 16) * 16, round(get_global_mouse_position().y / 16) * 16)
 		
 
 func _on_Prototype_inventorySignal():

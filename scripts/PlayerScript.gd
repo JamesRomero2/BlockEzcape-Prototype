@@ -5,7 +5,9 @@ onready var collisionRay := $RayCast2D
 var gridSize := 16.00
 var canMove := true
 var playerInputDirection := Vector2.ZERO
-var playerCollectedItem = {}
+
+var inventoryResource = load("res://scripts/Inventory.gd")
+var inventory = inventoryResource.new()
 
 func _physics_process(_delta):
 	if canMove:

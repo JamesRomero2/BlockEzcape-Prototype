@@ -1,5 +1,7 @@
 extends Area2D
 
+signal PuzzlePhaseComplete
+
 var doorOpen := false
 
 export (int) var requiredKeys := 3
@@ -18,5 +20,6 @@ func _on_Door_body_entered(body):
 			print("DOOR CLOSED, COLLECT ALL ORBS FIRST")
 		else:
 			print("DOOR OPEN, NEXTLEVEL")
+			emit_signal("PuzzlePhaseComplete")
 
 
