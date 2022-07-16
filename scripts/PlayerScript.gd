@@ -11,16 +11,6 @@ export(bool) var canMove := true
 var velocity := Vector2.ZERO
 
 func _physics_process(_delta):
-	if canMove:
-		if Input.is_action_just_pressed("ui_up"):
-			velocity = Vector2.UP
-		elif Input.is_action_just_pressed("ui_down"):
-			velocity = Vector2.DOWN
-		if Input.is_action_just_pressed("ui_left"):
-			velocity = Vector2.LEFT
-		elif Input.is_action_just_pressed("ui_right"):
-			velocity = Vector2.RIGHT
-		
 	if velocity != Vector2.ZERO:
 		canMove = false
 
@@ -35,3 +25,8 @@ func _physics_process(_delta):
 
 	if collision != null:
 		canMove = true
+
+
+func _on_TouchScreenButton_swipeDir(swipeDirection):
+	if canMove:
+		velocity = swipeDirection
