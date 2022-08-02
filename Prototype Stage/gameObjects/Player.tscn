@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Prototype Stage/scripts/PlayerScript.gd" type="Script" id=1]
+[ext_resource path="res://Prototype Stage/assets/images/png/PlayerSprite.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 1, 8 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 8, 1 )
+
+[node name="Player" type="KinematicBody2D"]
+collision_mask = 14
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+speed = 16
+
+[node name="Sprite2" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+centered = false
+hframes = 12
+
+[node name="Vectical" type="CollisionShape2D" parent="."]
+position = Vector2( 8, 8 )
+shape = SubResource( 1 )
+
+[node name="Horizontal" type="CollisionShape2D" parent="."]
+position = Vector2( 8, 8 )
+shape = SubResource( 2 )

@@ -1,0 +1,62 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Assets/images/png/PlayerSpriteSheet.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Animation/PlayerAnimation/Look_Left.tres" type="Animation" id=2]
+[ext_resource path="res://Assets/Animation/PlayerAnimation/Idle.tres" type="Animation" id=3]
+[ext_resource path="res://Assets/Animation/PlayerAnimation/Look_Right.tres" type="Animation" id=4]
+[ext_resource path="res://Assets/Animation/PlayerAnimation/Look_Forward.tres" type="Animation" id=5]
+[ext_resource path="res://Assets/Animation/PlayerAnimation/Look_Backward.tres" type="Animation" id=6]
+[ext_resource path="res://Assets/Animation/PlayerAnimation/Idle_Left.tres" type="Animation" id=7]
+[ext_resource path="res://Assets/Animation/PlayerAnimation/Idle_Right.tres" type="Animation" id=8]
+[ext_resource path="res://Assets/Animation/PlayerAnimation/Idle_Forward.tres" type="Animation" id=9]
+[ext_resource path="res://Scripts/PlayerScript.gd" type="Script" id=10]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 8, 1 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 1, 8 )
+
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 11 ]
+}
+
+[node name="Player" type="KinematicBody2D"]
+script = ExtResource( 10 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+hframes = 20
+frame = 11
+
+[node name="HorizontalCollision" type="CollisionShape2D" parent="."]
+position = Vector2( 8, 8 )
+shape = SubResource( 3 )
+
+[node name="VerticalCollision" type="CollisionShape2D" parent="."]
+position = Vector2( 8, 8 )
+shape = SubResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Idle_Backward"
+anims/Idle_Backward = ExtResource( 3 )
+anims/Idle_Forward = ExtResource( 9 )
+anims/Idle_Left = ExtResource( 7 )
+anims/Idle_Right = ExtResource( 8 )
+anims/Look_Backward = ExtResource( 6 )
+anims/Look_Forward = ExtResource( 5 )
+anims/Look_Left = ExtResource( 2 )
+anims/Look_Right = ExtResource( 4 )
+anims/RESET = SubResource( 5 )

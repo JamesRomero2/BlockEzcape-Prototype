@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Prototype Stage/gameObjects/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Prototype Stage/prototype/InventoryGrid.gd" type="Script" id=2]
+[ext_resource path="res://Prototype Stage/scripts/LevelManager.gd" type="Script" id=3]
+[ext_resource path="res://Prototype Stage/gameObjects/ItemObjects/Key.tscn" type="PackedScene" id=4]
+
+[node name="Prototype2" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="GameArea" type="Node2D" parent="."]
+
+[node name="Puzzle" type="Node2D" parent="GameArea"]
+
+[node name="Player" parent="GameArea/Puzzle" instance=ExtResource( 1 )]
+position = Vector2( 128, 48 )
+
+[node name="Key" parent="GameArea/Puzzle" instance=ExtResource( 4 )]
+position = Vector2( 160, 32 )
+
+[node name="Key2" parent="GameArea/Puzzle" instance=ExtResource( 4 )]
+position = Vector2( 208, 48 )
+
+[node name="Key3" parent="GameArea/Puzzle" instance=ExtResource( 4 )]
+position = Vector2( 256, 64 )
+
+[node name="UI" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="UI"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="GridContainer" type="GridContainer" parent="UI/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+
+[node name="TextureRect" type="TextureRect" parent="UI/Panel"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[connection signal="playerInitialize" from="." to="UI/Panel/GridContainer" method="_onPlayerInitialize"]
